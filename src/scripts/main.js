@@ -60,7 +60,7 @@ function runDetection() {
         if(predictions[0]) {
             handSize = calculateHandSize(predictions[0])
         }
-        if(handSize) {
+        if(handSize && predictions[0].label === "open") {
             document.getElementById("current-note").innerHTML = "&#9833 " + translateHandDistanceToNoteValue(handSize.toFixed(2)) + " &#9833";
         }
         model.renderPredictions(predictions, canvas, context, video);
