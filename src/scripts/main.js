@@ -24,7 +24,7 @@ const modelParams = {
 function startVideo() {
     handTrack.startVideo(video).then(function (status) {
         if (status) {
-            updateNote.innerText = "You may now move your open hand to play. And close it to stop playing."
+            updateNote.innerText = "Instructions: \n #1) Keep your hand open (all fingers out). \n #2) Keep your hand in the video frame. \n #3 Keep your face out of the video fram. \n #4 Use Pocket Therimin in a well lit room."
             isVideo = true
             runDetection()
         } else {
