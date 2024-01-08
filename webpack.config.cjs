@@ -8,7 +8,7 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  watch: true,
+  watch: false,
   plugins: [
     new BundleAnalyzerPlugin({
       analyzerMode: 'disabled',
