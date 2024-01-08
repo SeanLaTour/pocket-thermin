@@ -1,5 +1,6 @@
 import Tone from 'tone';
 import * as handTrack from 'handtrackjs';
+import "./styles/styles.css"
 // const synth = new Tone.Synth().toDestination();
 
 const video = document.getElementById("myvideo");
