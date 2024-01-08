@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "handtrackjs": "^0.1.5",
-    "tone": "^14.8.49",
+    "tone": "^14.7.77",
     "webpack-bundle-analyzer": "^4.10.1"
   },
   "devDependencies": {

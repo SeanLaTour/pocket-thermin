@@ -1,17 +1,18 @@
-import Tone from 'tone';
+import * as Tone from 'tone'
 import * as handTrack from 'handtrackjs';
 import "../styles/styles.css";
 import "../styles/loadingIcon.css";
-// const synth = new Tone.Synth().toDestination();
-
+const synth = new Tone.Synth().toDestination();
 const video = document.getElementById("myvideo");
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 let trackButton = document.getElementById("trackbutton");
 let updateNote = document.getElementById("updatenote");
-
 let isVideo = false;
 let model = null;
+let prevNote = "";
+
+synth.legato = true;
 
 const modelParams = {
     flipHorizontal: true,   // flip e.g for video  
@@ -45,13 +46,9 @@ function toggleVideo() {
 }
 
 function calculateHandSize(handPrediction) {
-    // Get the width and height of the bounding box
     const width = handPrediction.bbox[2];
     const height = handPrediction.bbox[3];
-
-    // Calculate the size (e.g., diagonal length of the bounding box)
     const size = Math.sqrt(width * width + height * height);
-
     return size;
 }
 
@@ -62,7 +59,7 @@ function runDetection() {
             handSize = calculateHandSize(predictions[0])
         }
         if(handSize && predictions[0].label === "open") {
-            document.getElementById("current-note").innerHTML = "&#9833 " + translateHandDistanceToNoteValue(handSize.toFixed(2)) + " &#9833";
+            document.getElementById("current-note").innerHTML = "&#9833 " + translateHandDistanceToNoteValue(handSize.toFixed(0)) + " &#9833";
         }
         model.renderPredictions(predictions, canvas, context, video);
         if (isVideo) {
@@ -71,9 +68,7 @@ function runDetection() {
     });
 }
 
-// Load the model.
 handTrack.load(modelParams).then(lmodel => {
-    // detect objects in the image.
     model = lmodel
     updateNote.innerText = ""
     trackButton.disabled = false
@@ -81,50 +76,75 @@ handTrack.load(modelParams).then(lmodel => {
 
 window.addEventListener("load", () => {
     const toggleVideoButton = document.getElementById("trackbutton");
-
     toggleVideoButton.addEventListener("click", () => {
         toggleVideo()
     })
 })
 
 function translateHandDistanceToNoteValue(handDistance) {
-    if(handDistance >= 200 && handDistance < 215) {
+    if(handDistance >= 200 && handDistance < 215 && prevNote !== "C") {
+        prevNote = "C"
+        synth.triggerAttackRelease("C4", "8n");
         return "C"
     } 
-    else if(handDistance >= 215 && handDistance < 230) {
+    else if(handDistance >= 215 && handDistance < 230 && prevNote !== "B") {
+        prevNote = "B"
+        synth.triggerAttackRelease("B3", "8n");
         return "B"
     } 
-    else if(handDistance >= 230 && handDistance < 245) {
+    else if(handDistance >= 230 && handDistance < 245 && prevNote !== "Bb") {
+        prevNote = "Bb"
+        synth.triggerAttackRelease("Bb3", "8n");
         return "Bb"
     } 
-    else if(handDistance >= 245 && handDistance < 260) {
+    else if(handDistance >= 245 && handDistance < 260 && prevNote !== "A") {
+        prevNote = "A"
+        synth.triggerAttackRelease("A3", "8n");
         return "A"
     } 
-    else if(handDistance >= 260 && handDistance < 275) {
+    else if(handDistance >= 260 && handDistance < 275 && prevNote !== "Ab") {
+        prevNote = "Ab"
+        synth.triggerAttackRelease("Ab3", "8n");
         return "Ab"
     } 
-    else if(handDistance >= 275 && handDistance < 300) {
+    else if(handDistance >= 275 && handDistance < 300 && prevNote !== "G") {
+        prevNote = "G"
+        synth.triggerAttackRelease("G3", "8n");
         return "G"
     } 
-    else if(handDistance >= 300 && handDistance < 315) {
+    else if(handDistance >= 300 && handDistance < 315 && prevNote !== "Gb") {
+        prevNote = "Gb"
+        synth.triggerAttackRelease("Gb3", "8n");
         return "Gb"
     } 
-    else if(handDistance >= 315 && handDistance < 330) {
+    else if(handDistance >= 315 && handDistance < 330 && prevNote !== "F") {
+        prevNote = "F"
+        synth.triggerAttackRelease("F3", "8n");
         return "F"
     } 
-    else if(handDistance >= 330 && handDistance < 345) {
+    else if(handDistance >= 330 && handDistance < 345 && prevNote !== "E") {
+        prevNote = "E"
+        synth.triggerAttackRelease("E3", "8n");
         return "E"
     } 
-    else if(handDistance >= 345 && handDistance < 360) {
+    else if(handDistance >= 345 && handDistance < 360 && prevNote !== "Eb") {
+        prevNote = "Eb"
+        synth.triggerAttackRelease("Eb3", "8n");
         return "Eb"
     } 
-    else if(handDistance >= 360 && handDistance < 375) {
+    else if(handDistance >= 360 && handDistance < 375 && prevNote !== "D") {
+        prevNote = "D"
+        synth.triggerAttackRelease("D3", "8n");
         return "D"
     } 
-    else if(handDistance >= 375 && handDistance < 400) {
+    else if(handDistance >= 375 && handDistance < 400 && prevNote !== "Db") {
+        prevNote = "Db"
+        synth.triggerAttackRelease("Db3", "8n");
         return "Db"
     } 
-    else if(handDistance >= 400 && handDistance < 415) {
+    else if(handDistance >= 400 && handDistance < 415 && prevNote !== "C") {
+        prevNote = "C"
+        synth.triggerAttackRelease("C3", "8n");
         return "C"
     } 
     else {
