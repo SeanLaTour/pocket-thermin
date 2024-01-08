@@ -33,13 +33,13 @@ function startVideo() {
 
 function toggleVideo() {
     if (!isVideo) {
-        updateNote.innerText = "Starting video"
+        updateNote.innerText = ""
         startVideo();
     } else {
-        updateNote.innerText = "Stopping video"
+        updateNote.innerText = ""
         handTrack.stopVideo(video)
         isVideo = false;
-        updateNote.innerText = "Video stopped"
+        updateNote.innerText = ""
     }
 }
 
@@ -56,15 +56,12 @@ function calculateHandSize(handPrediction) {
 
 function runDetection() {
     model.detect(video).then(predictions => {
-        console.log("Predictions: ", predictions);
-        console.log("params", model.getModelParameters())
         let handSize = 0;
         if(predictions[0]) {
             handSize = calculateHandSize(predictions[0])
         }
         if(handSize) {
-            document.getElementById("current-note").innerHTML = "Current Hand Distance: " + handSize.toFixed(2);
-
+            document.getElementById("current-note").innerHTML = "&#9833 " + translateHandDistanceToNoteValue(handSize.toFixed(2)) + " &#9833";
         }
         model.renderPredictions(predictions, canvas, context, video);
         if (isVideo) {
@@ -77,16 +74,61 @@ function runDetection() {
 handTrack.load(modelParams).then(lmodel => {
     // detect objects in the image.
     model = lmodel
-    updateNote.innerText = "Loaded Model!"
+    updateNote.innerText = ""
     trackButton.disabled = false
 });
 
 window.addEventListener("load", () => {
-    console.log("load")
     const toggleVideoButton = document.getElementById("trackbutton");
-    console.log("btn", toggleVideoButton)
 
     toggleVideoButton.addEventListener("click", () => {
         toggleVideo()
     })
 })
+
+function translateHandDistanceToNoteValue(handDistance) {
+    if(handDistance >= 200 && handDistance < 215) {
+        return "C"
+    } 
+    else if(handDistance >= 215 && handDistance < 230) {
+        return "B"
+    } 
+    else if(handDistance >= 230 && handDistance < 245) {
+        return "Bb"
+    } 
+    else if(handDistance >= 245 && handDistance < 260) {
+        return "A"
+    } 
+    else if(handDistance >= 260 && handDistance < 275) {
+        return "Ab"
+    } 
+    else if(handDistance >= 275 && handDistance < 300) {
+        return "G"
+    } 
+    else if(handDistance >= 300 && handDistance < 315) {
+        return "Gb"
+    } 
+    else if(handDistance >= 315 && handDistance < 330) {
+        return "F"
+    } 
+    else if(handDistance >= 330 && handDistance < 345) {
+        return "E"
+    } 
+    else if(handDistance >= 345 && handDistance < 360) {
+        return "Eb"
+    } 
+    else if(handDistance >= 360 && handDistance < 375) {
+        return "D"
+    } 
+    else if(handDistance >= 375 && handDistance < 400) {
+        return "Db"
+    } 
+    else if(handDistance >= 400 && handDistance < 415) {
+        return "C"
+    } 
+    else {
+        return "-"
+    }
+}
+
+

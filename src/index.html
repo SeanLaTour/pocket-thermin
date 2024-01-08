@@ -5,23 +5,19 @@
   <title>Pocket Thermin</title>
   <link rel="stylesheet" href="https://unpkg.com/carbon-components@latest/css/carbon-components.css" />
   <link rel="stylesheet" href="styles.css">
-</head>
-<body class="bx--body p20">
-  <!-- <img id="img" src="hand.jpg"/>  -->
-  <div id="current-note" class="p20">
-      Hand Distance
-  </div>
-  <div class="mb10">
-    <button id="trackbutton" class="bx--btn bx--btn--secondary" type="button">
-      Toggle Video
-    </button>
-    <div id="updatenote" class="updatenote mt10"> loading model ..</div>
-  </div>
-  <video class="videobox canvasbox" autoplay="autoplay" id="myvideo"></video>
-  <canvas wid id="canvas" class="border canvasbox"></canvas>
+  <link rel="stylesheet" href="loadingIcon.css">
 
-  <!-- <script src="https://unpkg.com/carbon-components@latest/scripts/carbon-components.js"></script> -->
-  <!-- <script src="https://cdn.jsdelivr.net/npm/handtrackjs/dist/handtrack.min.js"> </script> -->
+</head>
+<body class="">
+  <div class="">
+    <div style="display: flex; flex-direction: column; color: white; justify-content: center; align-items: center;" id="updatenote" class="updatenote"><div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+  </div>
+  <video style="display: none;" class="videobox canvasbox" autoplay="autoplay" id="myvideo"></video>
+  <canvas style="position: fixed; bottom: 0; right: 0;" wid id="canvas" class="border canvasbox"></canvas>
+  <div id="current-note" class=""></div>
+  <button id="trackbutton" class="" type="button">
+    Play
+  </button>
   <script src="../dist/bundle.js"></script>
 </body>
 

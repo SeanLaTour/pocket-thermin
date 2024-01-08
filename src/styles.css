@@ -1,5 +1,12 @@
 body {
     padding: 20px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
 }
 
 .p20 {
@@ -13,8 +20,7 @@ body {
     height: 338px;
     border-bottom: 3px solid #0063FF;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.2), 0 4px 10px 0 #00000030;
-  background: #333;
-
+    background: #333;
 }
 
 .mb10 {
@@ -26,8 +32,19 @@ body {
 }
 
 .updatenote {
-    padding: 10px;
-    background: rgb(245, 147, 20);
-    color: white;
-    display: inline;
+}
+
+#current-note {
+    font-size: 10rem;
+    font-family: monospace;
+    color: lavender;
+    transition-property: opacity;
+    transition-duration: 1s;
+}
+
+#trackbutton {
+    margin: 1rem;
+    padding: .5rem;
+    background-color: lavender;
+    border-radius: 5px;
 }
