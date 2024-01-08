@@ -8,4 +8,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   watch: true,
+  plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'disabled',
+    }),
+  ]
 };
