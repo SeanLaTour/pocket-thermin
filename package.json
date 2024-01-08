@@ -12,8 +12,18 @@
   "license": "ISC",
   "dependencies": {
     "handtrackjs": "^0.1.5",
-    "tone": "^14.8.49",
+    "tone": "^14.8.49"
+  },
+  "devDependencies": {
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SeanLaTour/pocket-thermin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SeanLaTour/pocket-thermin/issues"
+  },
+  "homepage": "https://github.com/SeanLaTour/pocket-thermin#readme"
 }
