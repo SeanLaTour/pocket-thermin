@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "webpack --config webpack.config.cjs"
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
