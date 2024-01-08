@@ -22,9 +22,8 @@ const modelParams = {
 
 function startVideo() {
     handTrack.startVideo(video).then(function (status) {
-        console.log("video started", status);
         if (status) {
-            updateNote.innerText = "Video started. Now tracking"
+            updateNote.innerText = "You may now move your open hand to play."
             isVideo = true
             runDetection()
         } else {
