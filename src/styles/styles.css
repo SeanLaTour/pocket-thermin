@@ -47,7 +47,8 @@ body {
 }
 
 #trackbutton {
-    margin: 1rem;
+    padding: .5rem;
+    font-size: 2rem;
     padding: .5rem;
     background-color: #333;
     color: white;

@@ -4,7 +4,7 @@ import "../styles/styles.css";
 import "../styles/loadingIcon.css";
 const synth = new Tone.Synth({
     oscillator: {
-      type: "sine",
+      type: "square",
     },
     envelope: {
         attack: 0.1,  // Short attack for smooth onset
@@ -85,15 +85,17 @@ function runDetection() {
 
         // Trigger synth when the hand is open
         if(predictions[0] && predictions[0].label === "open" && isSynthPlaying !== true) {
-            console.log("OPEN, trigger synth")
             synth.triggerAttack();
             isSynthPlaying = true;
         }
 
         // Set the frequency of the synth
-        if(handSize) {
-            let volume = 0;
-            volume = predictions[0].bbox[0] * 0.01;
+        if(handSize && predictions[0]) {
+            let volume = predictions[0].bbox[3];
+            if(predictions[0].bbox[3]) {
+                volume = 20;
+            }
+
             synth.set({ frequency: handSize, volume });
         }
 
