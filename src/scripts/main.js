@@ -2,7 +2,11 @@ import * as Tone from 'tone'
 import * as handTrack from 'handtrackjs';
 import "../styles/styles.css";
 import "../styles/loadingIcon.css";
-const synth = new Tone.Synth().toDestination();
+const synth = new Tone.Synth({
+    oscillator: {
+      type: "sawtooth",
+    },
+  }).toDestination();
 const video = document.getElementById("myvideo");
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
@@ -82,67 +86,77 @@ window.addEventListener("load", () => {
 })
 
 function translateHandDistanceToNoteValue(handDistance) {
-    if(handDistance >= 200 && handDistance < 215 && prevNote !== "C") {
+    if(handDistance >= 140 && handDistance < 170 && prevNote !== "C") {
+        prevNote = "C"
+        synth.triggerAttackRelease("D4", "4n");
+        return "C"
+    } 
+    else if(handDistance >= 170 && handDistance < 200 && prevNote !== "C") {
+        prevNote = "C"
+        synth.triggerAttackRelease("Db4", "4n");
+        return "C"
+    } 
+    else if(handDistance >= 200 && handDistance < 230 && prevNote !== "C") {
         prevNote = "C"
         synth.triggerAttackRelease("C4", "4n");
         return "C"
     } 
-    else if(handDistance >= 215 && handDistance < 230 && prevNote !== "B") {
+    else if(handDistance >= 230 && handDistance < 260 && prevNote !== "B") {
         prevNote = "B"
         synth.triggerAttackRelease("B3", "4n");
         return "B"
     } 
-    else if(handDistance >= 230 && handDistance < 245 && prevNote !== "Bb") {
+    else if(handDistance >= 260 && handDistance < 290 && prevNote !== "Bb") {
         prevNote = "Bb"
         synth.triggerAttackRelease("Bb3", "4n");
         return "Bb"
     } 
-    else if(handDistance >= 245 && handDistance < 260 && prevNote !== "A") {
+    else if(handDistance >= 290 && handDistance < 320 && prevNote !== "A") {
         prevNote = "A"
         synth.triggerAttackRelease("A3", "4n");
         return "A"
     } 
-    else if(handDistance >= 260 && handDistance < 275 && prevNote !== "Ab") {
+    else if(handDistance >= 320 && handDistance < 350 && prevNote !== "Ab") {
         prevNote = "Ab"
         synth.triggerAttackRelease("Ab3", "4n");
         return "Ab"
     } 
-    else if(handDistance >= 275 && handDistance < 300 && prevNote !== "G") {
+    else if(handDistance >= 350 && handDistance < 380 && prevNote !== "G") {
         prevNote = "G"
         synth.triggerAttackRelease("G3", "4n");
         return "G"
     } 
-    else if(handDistance >= 300 && handDistance < 315 && prevNote !== "Gb") {
+    else if(handDistance >= 380 && handDistance < 410 && prevNote !== "Gb") {
         prevNote = "Gb"
         synth.triggerAttackRelease("Gb3", "4n");
         return "Gb"
     } 
-    else if(handDistance >= 315 && handDistance < 330 && prevNote !== "F") {
+    else if(handDistance >= 410 && handDistance < 440 && prevNote !== "F") {
         prevNote = "F"
         synth.triggerAttackRelease("F3", "4n");
         return "F"
     } 
-    else if(handDistance >= 330 && handDistance < 345 && prevNote !== "E") {
+    else if(handDistance >= 440 && handDistance < 470 && prevNote !== "E") {
         prevNote = "E"
         synth.triggerAttackRelease("E3", "4n");
         return "E"
     } 
-    else if(handDistance >= 345 && handDistance < 360 && prevNote !== "Eb") {
+    else if(handDistance >= 470 && handDistance < 500 && prevNote !== "Eb") {
         prevNote = "Eb"
         synth.triggerAttackRelease("Eb3", "4n");
         return "Eb"
     } 
-    else if(handDistance >= 360 && handDistance < 375 && prevNote !== "D") {
+    else if(handDistance >= 500 && handDistance < 530 && prevNote !== "D") {
         prevNote = "D"
         synth.triggerAttackRelease("D3", "4n");
         return "D"
     } 
-    else if(handDistance >= 375 && handDistance < 400 && prevNote !== "Db") {
+    else if(handDistance >= 530 && handDistance < 560 && prevNote !== "Db") {
         prevNote = "Db"
         synth.triggerAttackRelease("Db3", "4n");
         return "Db"
     } 
-    else if(handDistance >= 400 && handDistance < 415 && prevNote !== "C") {
+    else if(handDistance >= 560 && handDistance < 590 && prevNote !== "C") {
         prevNote = "C"
         synth.triggerAttackRelease("C3", "4n");
         return "C"
