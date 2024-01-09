@@ -4,8 +4,14 @@ import "../styles/styles.css";
 import "../styles/loadingIcon.css";
 const synth = new Tone.Synth({
     oscillator: {
-      type: "sawtooth",
+      type: "sine",
     },
+    envelope: {
+        attack: 0.1,  // Short attack for smooth onset
+        decay: 0.2,  // Short decay for a legato-like feel
+        sustain: 0.5,
+        release: 1,
+      },
   }).toDestination();
 const video = document.getElementById("myvideo");
 const canvas = document.getElementById("canvas");
@@ -15,12 +21,13 @@ let updateNote = document.getElementById("updatenote");
 let isVideo = false;
 let model = null;
 let prevNote = "";
+let isSynthPlaying = false;
 
 synth.legato = true;
 
 const modelParams = {
     flipHorizontal: true,   // flip e.g for video  
-    maxNumBoxes: 20,        // maximum number of boxes to detect
+    maxNumBoxes: 1,        // maximum number of boxes to detect
     iouThreshold: 0.5,      // ioU threshold for non-max suppression
     scoreThreshold: 0.6,    // confidence threshold for predictions.
 }
@@ -59,12 +66,41 @@ function calculateHandSize(handPrediction) {
 function runDetection() {
     model.detect(video).then(predictions => {
         let handSize = 0;
+
+        // Get handsize
         if(predictions[0]) {
+            console.log(predictions[0])
             handSize = calculateHandSize(predictions[0])
         }
-        if(handSize && predictions[0].label === "open") {
-            document.getElementById("current-note").innerHTML = "&#9833 " + translateHandDistanceToNoteValue(handSize.toFixed(0)) + " &#9833";
+
+        // Trigger synth when the hand is open
+        if(predictions[0] && predictions[0].label === "open" && isSynthPlaying !== true) {
+            console.log("OPEN, trigger synth")
+            synth.triggerAttack();
+            isSynthPlaying = true;
         }
+
+        // Set the frequency of the synth
+        if(handSize) {
+            let volume = 0;
+            if(predictions[0].bbox[0] < 30) {
+                volume = predictions[0].bbox[0];
+            }
+            else {
+                volume = 30;
+            }
+            synth.set({ frequency: handSize, volume });
+        }
+
+        if(handSize) {
+            document.getElementById("current-note").innerHTML = "&#9833 " + handSize.toFixed(2) + "hz &#9833";
+        }
+
+        if(predictions[0] && predictions[0].label === "closed") {
+            synth.triggerRelease();
+            isSynthPlaying = false;
+        }
+
         model.renderPredictions(predictions, canvas, context, video);
         if (isVideo) {
             requestAnimationFrame(runDetection);
@@ -88,77 +124,77 @@ window.addEventListener("load", () => {
 function translateHandDistanceToNoteValue(handDistance) {
     if(handDistance >= 140 && handDistance < 170 && prevNote !== "C") {
         prevNote = "C"
-        synth.triggerAttackRelease("D4", "4n");
+        // synth.triggerAttackRelease("D4", "4n");
         return "C"
     } 
     else if(handDistance >= 170 && handDistance < 200 && prevNote !== "C") {
         prevNote = "C"
-        synth.triggerAttackRelease("Db4", "4n");
+        // synth.triggerAttackRelease("Db4", "4n");
         return "C"
     } 
     else if(handDistance >= 200 && handDistance < 230 && prevNote !== "C") {
         prevNote = "C"
-        synth.triggerAttackRelease("C4", "4n");
+        // synth.triggerAttackRelease("C4", "4n");
         return "C"
     } 
     else if(handDistance >= 230 && handDistance < 260 && prevNote !== "B") {
         prevNote = "B"
-        synth.triggerAttackRelease("B3", "4n");
+        // synth.triggerAttackRelease("B3", "4n");
         return "B"
     } 
     else if(handDistance >= 260 && handDistance < 290 && prevNote !== "Bb") {
         prevNote = "Bb"
-        synth.triggerAttackRelease("Bb3", "4n");
+        // synth.triggerAttackRelease("Bb3", "4n");
         return "Bb"
     } 
     else if(handDistance >= 290 && handDistance < 320 && prevNote !== "A") {
         prevNote = "A"
-        synth.triggerAttackRelease("A3", "4n");
+        // synth.triggerAttackRelease("A3", "4n");
         return "A"
     } 
     else if(handDistance >= 320 && handDistance < 350 && prevNote !== "Ab") {
         prevNote = "Ab"
-        synth.triggerAttackRelease("Ab3", "4n");
+        // synth.triggerAttackRelease("Ab3", "4n");
         return "Ab"
     } 
     else if(handDistance >= 350 && handDistance < 380 && prevNote !== "G") {
         prevNote = "G"
-        synth.triggerAttackRelease("G3", "4n");
+        // synth.triggerAttackRelease("G3", "4n");
         return "G"
     } 
     else if(handDistance >= 380 && handDistance < 410 && prevNote !== "Gb") {
         prevNote = "Gb"
-        synth.triggerAttackRelease("Gb3", "4n");
+        // synth.triggerAttackRelease("Gb3", "4n");
         return "Gb"
     } 
     else if(handDistance >= 410 && handDistance < 440 && prevNote !== "F") {
         prevNote = "F"
-        synth.triggerAttackRelease("F3", "4n");
+        // synth.triggerAttackRelease("F3", "4n");
         return "F"
     } 
     else if(handDistance >= 440 && handDistance < 470 && prevNote !== "E") {
         prevNote = "E"
-        synth.triggerAttackRelease("E3", "4n");
+        // synth.triggerAttackRelease("E3", "4n");
         return "E"
     } 
     else if(handDistance >= 470 && handDistance < 500 && prevNote !== "Eb") {
         prevNote = "Eb"
-        synth.triggerAttackRelease("Eb3", "4n");
+        // synth.triggerAttackRelease("Eb3", "4n");
         return "Eb"
     } 
     else if(handDistance >= 500 && handDistance < 530 && prevNote !== "D") {
         prevNote = "D"
-        synth.triggerAttackRelease("D3", "4n");
+        // synth.triggerAttackRelease("D3", "4n");
         return "D"
     } 
     else if(handDistance >= 530 && handDistance < 560 && prevNote !== "Db") {
         prevNote = "Db"
-        synth.triggerAttackRelease("Db3", "4n");
+        // synth.triggerAttackRelease("Db3", "4n");
         return "Db"
     } 
     else if(handDistance >= 560 && handDistance < 590 && prevNote !== "C") {
         prevNote = "C"
-        synth.triggerAttackRelease("C3", "4n");
+        // synth.triggerAttackRelease("C3", "4n");
         return "C"
     } 
     else {

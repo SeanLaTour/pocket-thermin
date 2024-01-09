@@ -37,7 +37,7 @@ body {
 }
 
 #current-note {
-    font-size: 10rem;
+    font-size: 4rem;
     font-family: monospace;
     color: violet;
     transition-property: opacity;
