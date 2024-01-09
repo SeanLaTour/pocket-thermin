@@ -22,14 +22,24 @@ let isVideo = false;
 let model = null;
 let prevNote = "";
 let isSynthPlaying = false;
+// Create a FeedbackDelay with a delay time of 0.2 seconds and feedback of 0.5
+const delay = new Tone.FeedbackDelay(0.2, 0.5).toDestination();
+
+// Create a Reverb with a decay time of 2 seconds
+const reverb = new Tone.Reverb(2).toDestination();
+
+// Connect the synth to the delay and reverb
+// synth.connect(delay);
+synth.connect(reverb);
 
 synth.legato = true;
 
 const modelParams = {
-    flipHorizontal: true,   // flip e.g for video  
+    flipHorizontal: false,   // flip e.g for video  
     maxNumBoxes: 1,        // maximum number of boxes to detect
     iouThreshold: 0.5,      // ioU threshold for non-max suppression
     scoreThreshold: 0.6,    // confidence threshold for predictions.
+    imageScaleFactor: 0.5
 }
 
 function startVideo() {
@@ -83,12 +93,7 @@ function runDetection() {
         // Set the frequency of the synth
         if(handSize) {
             let volume = 0;
-            if(predictions[0].bbox[0] < 30) {
-                volume = predictions[0].bbox[0];
-            }
-            else {
-                volume = 30;
-            }
+            volume = predictions[0].bbox[0] * 0.01;
             synth.set({ frequency: handSize, volume });
         }
 
