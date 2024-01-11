@@ -4,7 +4,7 @@ import "../styles/styles.css";
 import "../styles/loadingIcon.css";
 const synth = new Tone.Synth({
     oscillator: {
-      type: "square",
+      type: "sine",
     },
     envelope: {
         attack: 0.1,  // Short attack for smooth onset
@@ -12,6 +12,7 @@ const synth = new Tone.Synth({
         sustain: 0.5,
         release: 1,
       },
+      portamento: 2,
   }).toDestination();
 const video = document.getElementById("myvideo");
 const canvas = document.getElementById("canvas");
@@ -91,12 +92,7 @@ function runDetection() {
 
         // Set the frequency of the synth
         if(handSize && predictions[0]) {
-            let volume = predictions[0].bbox[3];
-            if(predictions[0].bbox[3]) {
-                volume = 20;
-            }
-
-            synth.set({ frequency: handSize, volume });
+            synth.set({ frequency: handSize });
         }
 
         if(handSize) {
