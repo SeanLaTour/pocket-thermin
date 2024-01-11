@@ -96,7 +96,8 @@ function runDetection() {
         }
 
         if(handSize) {
-            document.getElementById("current-note").innerHTML = "&#9833 " + (handSize+ 100).toFixed(2) + "hz &#9833";
+            document.getElementById("current-frequency").innerHTML = "~ " + (handSize+ 100).toFixed(2) + "hz ~";
+            document.getElementById("current-note").innerHTML = "&#9833 " + translateHandDistanceToNoteValue(handSize) + " &#9833 ";
         }
 
         if(predictions[0] && predictions[0].label === "closed") {
@@ -125,84 +126,67 @@ window.addEventListener("load", () => {
 })
 
 function translateHandDistanceToNoteValue(handDistance) {
-    if(handDistance >= 140 && handDistance < 170 && prevNote !== "C") {
-        prevNote = "C"
-        // synth.triggerAttackRelease("D4", "4n");
-        return "C"
-    } 
-    else if(handDistance >= 170 && handDistance < 200 && prevNote !== "C") {
-        prevNote = "C"
-        // synth.triggerAttackRelease("Db4", "4n");
-        return "C"
-    } 
-    else if(handDistance >= 200 && handDistance < 230 && prevNote !== "C") {
-        prevNote = "C"
-        // synth.triggerAttackRelease("C4", "4n");
-        return "C"
-    } 
-    else if(handDistance >= 230 && handDistance < 260 && prevNote !== "B") {
-        prevNote = "B"
-        // synth.triggerAttackRelease("B3", "4n");
-        return "B"
-    } 
-    else if(handDistance >= 260 && handDistance < 290 && prevNote !== "Bb") {
-        prevNote = "Bb"
-        // synth.triggerAttackRelease("Bb3", "4n");
-        return "Bb"
-    } 
-    else if(handDistance >= 290 && handDistance < 320 && prevNote !== "A") {
-        prevNote = "A"
-        // synth.triggerAttackRelease("A3", "4n");
-        return "A"
-    } 
-    else if(handDistance >= 320 && handDistance < 350 && prevNote !== "Ab") {
-        prevNote = "Ab"
-        // synth.triggerAttackRelease("Ab3", "4n");
-        return "Ab"
-    } 
-    else if(handDistance >= 350 && handDistance < 380 && prevNote !== "G") {
-        prevNote = "G"
-        // synth.triggerAttackRelease("G3", "4n");
-        return "G"
-    } 
-    else if(handDistance >= 380 && handDistance < 410 && prevNote !== "Gb") {
-        prevNote = "Gb"
-        // synth.triggerAttackRelease("Gb3", "4n");
-        return "Gb"
-    } 
-    else if(handDistance >= 410 && handDistance < 440 && prevNote !== "F") {
-        prevNote = "F"
-        // synth.triggerAttackRelease("F3", "4n");
-        return "F"
-    } 
-    else if(handDistance >= 440 && handDistance < 470 && prevNote !== "E") {
-        prevNote = "E"
-        // synth.triggerAttackRelease("E3", "4n");
-        return "E"
-    } 
-    else if(handDistance >= 470 && handDistance < 500 && prevNote !== "Eb") {
-        prevNote = "Eb"
-        // synth.triggerAttackRelease("Eb3", "4n");
-        return "Eb"
-    } 
-    else if(handDistance >= 500 && handDistance < 530 && prevNote !== "D") {
-        prevNote = "D"
-        // synth.triggerAttackRelease("D3", "4n");
-        return "D"
-    } 
-    else if(handDistance >= 530 && handDistance < 560 && prevNote !== "Db") {
-        prevNote = "Db"
-        // synth.triggerAttackRelease("Db3", "4n");
-        return "Db"
-    } 
-    else if(handDistance >= 560 && handDistance < 590 && prevNote !== "C") {
-        prevNote = "C"
-        // synth.triggerAttackRelease("C3", "4n");
-        return "C"
-    } 
-    else {
-        return "-"
-    }
+    console.log("handdist", handDistance)
+    let noteName = "-";
+    Object.values(noteFrequencyMapping).forEach(note => {
+
+        if(handDistance >= note.lowThresh && handDistance <= note.highThresh) {
+            console.log("in", note)
+            noteName = note.noteName;
+        }
+    })
+    return noteName;
 }
 
-
+const noteFrequencyMapping = {
+    'C2': { noteName: 'C2', lowThresh: 60.00, highThresh: 64.27 },
+    'C#2': { noteName: 'C#2', lowThresh: 64.27, highThresh: 68.38 },
+    'D2': { noteName: 'D2', lowThresh: 68.38, highThresh: 72.83 },
+    'D#2': { noteName: 'D#2', lowThresh: 72.83, highThresh: 77.55 },
+    'E2': { noteName: 'E2', lowThresh: 77.55, highThresh: 82.41 },
+    'F2': { noteName: 'F2', lowThresh: 82.41, highThresh: 87.31 },
+    'F#2': { noteName: 'F#2', lowThresh: 87.31, highThresh: 92.50 },
+    'G2': { noteName: 'G2', lowThresh: 92.50, highThresh: 98.00 },
+    'G#2': { noteName: 'G#2', lowThresh: 98.00, highThresh: 103.83 },
+    'A2': { noteName: 'A2', lowThresh: 103.83, highThresh: 110.00 },
+    'A#2': { noteName: 'A#2', lowThresh: 110.00, highThresh: 116.54 },
+    'B2': { noteName: 'B2', lowThresh: 116.54, highThresh: 123.47 },
+  
+    'C3': { noteName: 'C3', lowThresh: 123.47, highThresh: 130.81 },
+    'C#3': { noteName: 'C#3', lowThresh: 130.81, highThresh: 138.59 },
+    'D3': { noteName: 'D3', lowThresh: 138.59, highThresh: 146.83 },
+    'D#3': { noteName: 'D#3', lowThresh: 146.83, highThresh: 155.56 },
+    'E3': { noteName: 'E3', lowThresh: 155.56, highThresh: 164.81 },
+    'F3': { noteName: 'F3', lowThresh: 164.81, highThresh: 174.61 },
+    'F#3': { noteName: 'F#3', lowThresh: 174.61, highThresh: 185.00 },
+    'G3': { noteName: 'G3', lowThresh: 185.00, highThresh: 196.00 },
+    'G#3': { noteName: 'G#3', lowThresh: 196.00, highThresh: 207.65 },
+    'A3': { noteName: 'A3', lowThresh: 207.65, highThresh: 220.00 },
+    'A#3': { noteName: 'A#3', lowThresh: 220.00, highThresh: 233.08 },
+    'B3': { noteName: 'B3', lowThresh: 233.08, highThresh: 246.94 },
+  
+    'C4': { noteName: 'C4', lowThresh: 246.94, highThresh: 261.63 },
+    'C#4': { noteName: 'C#4', lowThresh: 261.63, highThresh: 277.18 },
+    'D4': { noteName: 'D4', lowThresh: 277.18, highThresh: 293.66 },
+    'D#4': { noteName: 'D#4', lowThresh: 293.66, highThresh: 311.13 },
+    'E4': { noteName: 'E4', lowThresh: 311.13, highThresh: 329.63 },
+    'F4': { noteName: 'F4', lowThresh: 329.63, highThresh: 349.23 },
+    'F#4': { noteName: 'F#4', lowThresh: 349.23, highThresh: 369.99 },
+    'G4': { noteName: 'G4', lowThresh: 369.99, highThresh: 392.00 },
+    'G#4': { noteName: 'G#4', lowThresh: 392.00, highThresh: 415.30 },
+    'A4': { noteName: 'A4', lowThresh: 415.30, highThresh: 440.00 },
+    'A#4': { noteName: 'A#4', lowThresh: 440.00, highThresh: 466.16 },
+    'B4': { noteName: 'B4', lowThresh: 466.16, highThresh: 493.88 },
+  
+    'C5': { noteName: 'C5', lowThresh: 493.88, highThresh: 523.25 },
+    'C#5': { noteName: 'C#5', lowThresh: 523.25, highThresh: 554.37 },
+    'D5': { noteName: 'D5', lowThresh: 554.37, highThresh: 587.33 },
+    'D#5': { noteName: 'D#5', lowThresh: 587.33, highThresh: 622.25 },
+    'E5': { noteName: 'E5', lowThresh: 622.25, highThresh: 659.25 },
+    'F5': { noteName: 'F5', lowThresh: 659.25, highThresh: 698.46 },
+    'F#5': { noteName: 'F#5', lowThresh: 698.46, highThresh: 739.99 },
+    'G5': { noteName: 'G5', lowThresh: 739.99, highThresh: 783.99 },
+    'G#5': { noteName: 'G#5', lowThresh: 783.99, highThresh: 830.61 },
+    'A5': { noteName: 'A5', lowThresh: 830.61, highThresh: 880.00 },
+    'A#5': { noteName: 'A#5', lowThresh: 880.00, highThresh: 932.33 }
+}

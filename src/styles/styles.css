@@ -33,14 +33,26 @@ body {
 }
 
 .updatenote {
+    color: #03A062;
     margin-bottom: 10vh;
     font-size: 1.75rem;
 }
 
 #current-note {
+    margin-block: 10rem;
     font-size: 4rem;
     font-family: monospace;
-    color: violet;
+    color: #03A062;
+    transition-property: opacity;
+    transition-duration: 1s;
+    width: 100vw;
+    text-align: center;
+}
+
+#current-frequency {
+    font-size: 4rem;
+    font-family: monospace;
+    color: #03A062;
     transition-property: opacity;
     transition-duration: 1s;
     width: 100vw;
