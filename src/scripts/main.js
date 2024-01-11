@@ -92,11 +92,11 @@ function runDetection() {
 
         // Set the frequency of the synth
         if(handSize && predictions[0]) {
-            synth.set({ frequency: handSize });
+            synth.set({ frequency: handSize + 100 });
         }
 
         if(handSize) {
-            document.getElementById("current-note").innerHTML = "&#9833 " + handSize.toFixed(2) + "hz &#9833";
+            document.getElementById("current-note").innerHTML = "&#9833 " + (handSize.toFixed(2) + 100) + "hz &#9833";
         }
 
         if(predictions[0] && predictions[0].label === "closed") {
