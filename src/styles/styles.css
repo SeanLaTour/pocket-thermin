@@ -7,6 +7,7 @@ body {
     align-items: center;
     width: 100vw;
     height: 100vh;
+    font-family: cursive;
 }
 
 .p20 {
@@ -33,7 +34,7 @@ body {
 
 .updatenote {
     margin-bottom: 10vh;
-    font-size: large;
+    font-size: 1.75rem;
 }
 
 #current-note {
@@ -49,7 +50,7 @@ body {
 #trackbutton {
     padding: .5rem;
     font-size: 2rem;
-    padding: .5rem;
+    padding: 1rem;
     background-color: #333;
     color: white;
     border-radius: 5px;

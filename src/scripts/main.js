@@ -46,7 +46,7 @@ const modelParams = {
 function startVideo() {
     handTrack.startVideo(video).then(function (status) {
         if (status) {
-            updateNote.innerText = "Instructions: \n #1) Keep your hand open (all fingers out). \n #2) Keep your hand in the video frame. \n #3 Keep your face out of the video fram. \n #4 Use Pocket Therimin in a well lit room."
+            updateNote.innerText = "Instructions: \n #1) Lay your phone on a flat surface in a well lit room. \n #2) Raise your hand over the camera of your phone (1ft-4ft away). \n #3 Try and keep only your hand above your phone's camera. \n #4 To trigger the instument, open your hand wide, this will play the Pocket Theremin Tone. \n #5) To cease playing, close your hand into a tight fist. \n #6) Go forth and shred you sci-fi sounding son of a bitch! "
             isVideo = true
             runDetection()
         } else {
@@ -96,7 +96,7 @@ function runDetection() {
         }
 
         if(handSize) {
-            document.getElementById("current-note").innerHTML = "&#9833 " + (handSize.toFixed(2) + 100) + "hz &#9833";
+            document.getElementById("current-note").innerHTML = "&#9833 " + (handSize+ 100).toFixed(2) + "hz &#9833";
         }
 
         if(predictions[0] && predictions[0].label === "closed") {
